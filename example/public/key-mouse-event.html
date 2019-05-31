@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>event</title>
+</head>
+<body>
+  <header>event</header>
+
+  <ol>
+    <li>
+      <b>import</b>
+      <pre>
+        <code>
+          // js引入
+          var keyMouseEvent = window['key-mouse-event'];
+          
+          // cjs
+          const keyMouseEvent = require('@hudk/key-mouse-event');
+
+          // es6
+          import keyMouseEvent from '@hudk/key-mouse-event';
+        </code>
+      </pre>
+    </li>
+    <li>
+      <b>simple usage</b>
+      <pre>
+        <code>
+          function printMsg(...rest) {
+            return function (e) {
+              rest && rest.forEach(item => console.log(item));
+              console.log(e.eventPhase);
+              console.log(e.currentTarget);
+            }
+          }
+
+          [
+            'a',
+            'comman+a',
+          ].map(key => {
+            keyMouseEvent.addDOMEvents().addKeyMouseEvent(key, printMsg(key));
+          });
+
+          [
+            'b',
+            'comman+b',
+          ].map(key => {
+            keyMouseEvent.addDOMEvents().addKeyMouseEvent(key, printMsg(key), { capture: true });
+          });
+        </code>
+        <button class="button">open your console and click, then do as you register</button>
+      </pre>
+    </li>
+  </ol>
+
+  <script src="/js/key-mouse-event.js"></script>
+  <script src="/js/code2scirpt.js"></script>
+  <script>
+    var keyMouseEvent = window['key-mouse-event'];
+
+    document.body.addEventListener('click', function (event) {
+      var ele = event.target;
+      if (!(ele.attributes.class && ele.attributes.class.textContent.indexOf('button') > -1)) {
+        return;
+      }
+
+      code2script(ele.parentElement.getElementsByTagName('code')[0].textContent);
+    });
+  </script>
+</body>
+</html>
